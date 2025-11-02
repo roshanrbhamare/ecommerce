@@ -18,11 +18,12 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-8 overflow-y-auto">
-      <h1 class="text-3xl font-bold mb-6 text-green-800">Welcome, <%= order.userId.firstname %>!</h1>
+      <h1 class="text-3xl font-bold mb-6 text-green-800">Welcome, <%= order && order.userId ? order.userId.firstname : '' %>!</h1>
 
       <!-- Orders Section -->
       <div id="orders" class="content-section bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold mb-4 text-green-700">Recent Orders</h2>
+        <% if (order && order.orders && order.orders.length > 0) { %>
         <table class="w-full border-collapse border border-green-300 rounded-lg overflow-hidden">
           <thead>
             <tr class="bg-green-300 text-green-900">
@@ -51,13 +52,20 @@
             <% }); %>
           </tbody>
         </table>
+        <% } else { %>
+          <p>No orders found.</p>
+        <% } %>
       </div>
 
       <!-- Profile Section -->
       <div id="profile" class="content-section hidden bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold mb-4 text-green-700">Profile</h2>
+        <% if (order && order.userId) { %>
         <p>Name: <%= order.userId.firstname %> <%= order.userId.lastname %></p>
         <p>Email: <%= order.userId.email %></p>
+        <% } else { %>
+        <p>No profile information available.</p>
+        <% } %>
       </div>
 
       <!-- Wishlist Section -->
